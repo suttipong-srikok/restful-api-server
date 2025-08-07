@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ RESTful API Server - Complete Development Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            margin: -20px -20px 2rem -20px;
+            border-radius: 0 0 15px 15px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.2em;
+            margin-top: 0.5rem;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+        }
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            margin: 1rem 0;
+            white-space: pre;
+            line-height: 1.4;
+        }
+        .command {
+            background: #1a202c;
+            color: #68d391;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            display: inline-block;
+            margin: 0.2rem 0;
+        }
+        .api-endpoint {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 0.5rem 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #74c0fc;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #4caf50;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        .toc a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .architecture-diagram {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>C++ RESTful API Server</h1>
+            <div class="subtitle">Complete Development Guide - Production-Ready API with JWT Authentication, Redis Caching & SQLite</div>
+        </header>
+
+        <div class="card toc">
+            <h3>📋 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">1. Project Overview</a></li>
+                <li><a href="#prerequisites">2. Prerequisites & Setup</a></li>
+                <li><a href="#architecture">3. System Architecture</a></li>
+                <li><a href="#step-by-step">4. Step-by-Step Development</a></li>
+                <li><a href="#api-endpoints">5. API Endpoints</a></li>
+                <li><a href="#docker-setup">6. Docker Configuration</a></li>
+                <li><a href="#testing">7. Testing Your API</a></li>
+                <li><a href="#deployment">8. Production Deployment</a></li>
+                <li><a href="#authentication">9. Authentication & JWT</a></li>
+                <li><a href="#advanced">10. Advanced Features</a></li>
+                <li><a href="#troubleshooting">11. Troubleshooting</a></li>
+            </ul>
+        </div>
+
+        <div class="card" id="overview">
+            <h2>🎯 1. Project Overview</h2>
+            <p>This guide walks you through building a complete RESTful API server in C++ from scratch. The server provides a full CRUD API for user management with JWT authentication, Redis caching, SQLite persistence, and structured logging.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🚀 Core Features</h4>
+                    <ul>
+                        <li>RESTful API with JSON support</li>
+                        <li>JWT authentication with token blacklisting</li>
+                        <li>SQLite database with automatic schema initialization</li>
+                        <li>Redis caching with TTL management</li>
+                        <li>Structured logging with spdlog</li>
+                        <li>CORS enabled for web clients</li>
+                        <li>Comprehensive error handling</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🐳 Docker Integration</h4>
+                    <ul>
+                        <li>Multi-container setup with Redis</li>
+                        <li>Nginx reverse proxy</li>
+                        <li>Health checks with Redis status</li>
+                        <li>Auto-restart policies</li>
+                        <li>Volume persistence for logs</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🛠 Modern C++</h4>
+                    <ul>
+                        <li>C++17 standards</li>
+                        <li>Header-only libraries</li>
+                        <li>Thread-safe operations</li>
+                        <li>Memory-safe patterns</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="prerequisites">
+            <h2>📋 2. Prerequisites & Setup</h2>
+            
+            <h3>🖥 System Requirements</h3>
+            <div class="step">
+                <h4>Linux/Ubuntu (Recommended)</h4>
+                <div class="command">sudo apt-get update</div>
+                <div class="command">sudo apt-get update && apt-get install -y g++ cmake git pkg-config libssl-dev zlib1g-dev libsqlite3-dev sqlite3 libhiredis-dev wget curl build-essential</div>
+            </div>
+
+            <div class="step">
+                <h4>macOS</h4>
+                <div class="command">xcode-select --install</div>
+                <div class="command">brew install cmake pkg-config openssl</div>
+            </div>
+
+            <div class="step">
+                <h4>Windows (WSL2 Recommended)</h4>
+                <div class="command">wsl --install -d Ubuntu-22.04</div>
+                <p>Then follow Linux setup instructions</p>
+            </div>
+
+            <div class="info">
+                <strong>💡 Pro Tip:</strong> This tutorial assumes Ubuntu 22.04 or later. Commands may vary for other distributions.
+            </div>
+
+            <h3>🚢 Docker Setup (Optional but Recommended)</h3>
+            <div class="command">curl -fsSL https://get.docker.com -o get-docker.sh</div>
+            <div class="command">sudo sh get-docker.sh</div>
+            <div class="command">sudo usermod -aG docker $USER</div>
+        </div>
+
+        <div class="card" id="architecture">
+            <h2>🏗 3. System Architecture</h2>
+            
+            <div class="architecture-diagram">
+                <h3>Architecture Overview</h3>
+                <pre style="font-family: monospace; text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 5px;">┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Client App    │───▶│  Nginx Proxy    │───▶│  C++ API Server │
+│                 │    │   (Port 80)     │    │   (Port 8080)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                     ┌──────────────────┼──────────────────┐
+                                     ▼                  ▼                  ▼
+                            ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+                            │  SQLite DB      │ │  Redis Cache    │ │  Structured     │
+                            │  (Persistence)  │ │  (Performance)  │ │  Logging        │
+                            └─────────────────┘ └─────────────────┘ └─────────────────┘</pre>
+            </div>
+
+            <h3>🧩 Key Components</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Technology</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTTP Server</td>
+                        <td>cpp-httplib</td>
+                        <td>Handle HTTP requests/responses</td>
+                    </tr>
+                    <tr>
+                        <td>JSON Processing</td>
+                        <td>nlohmann/json</td>
+                        <td>Parse and generate JSON data</td>
+                    </tr>
+                    <tr>
+                        <td>Data Storage</td>
+                        <td>SQLite3 + Redis</td>
+                        <td>Persistent database with Redis caching</td>
+                    </tr>
+                    <tr>
+                        <td>Reverse Proxy</td>
+                        <td>Nginx</td>
+                        <td>Load balancing and SSL termination</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" id="step-by-step">
+            <h2>👷 4. Step-by-Step Development</h2>
+
+            <h3>Step 1: Project Initialization</h3>
+            <div class="step">
+                <h4>Create Project Directory</h4>
+                <div class="command">mkdir restful-api-server</div>
+                <div class="command">cd restful-api-server</div>
+                <div class="command">git init</div>
+            </div>
+
+            <h3>Step 2: Create Main Application (main.cpp)</h3>
+            <div class="step">
+                <h4>Basic Structure</h4>
+                <div class="code-block">#include &lt;httplib.h&gt;
+#include &lt;nlohmann/json.hpp&gt;
+#include &lt;jwt-cpp/jwt.h&gt;
+#include &lt;sqlite3.h&gt;
+#include &lt;spdlog/spdlog.h&gt;
+#include &lt;spdlog/sinks/stdout_color_sinks.h&gt;
+#include &lt;spdlog/sinks/rotating_file_sink.h&gt;
+#include &lt;sw/redis++/redis++.h&gt;
+#include &lt;openssl/sha.h&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;mutex&gt;
+#include &lt;memory&gt;
+#include &lt;chrono&gt;
+
+using json = nlohmann::json;
+using namespace std;
+
+// User data structures
+struct User {
+    int id;
+    string name;
+    string email;
+};
+
+struct AuthUser {
+    int id;
+    string username;
+    string email;
+    string password_hash;
+    string created_at;
+};</div>
+            </div>
+
+            <h3>Step 3: Implement User Service</h3>
+            <div class="step">
+                <h4>Thread-Safe Data Management</h4>
+                <div class="code-block">class UserService {
+private:
+    sqlite3* db;
+    mutex db_mutex;
+    CacheManager* cache;
+
+    void executeSQL(const string&amp; sql) {
+        char* errMsg = 0;
+        int rc = sqlite3_exec(db, sql.c_str(), 0, 0, &amp;errMsg);
+        if (rc != SQLITE_OK) {
+            string error = "SQL error: ";
+            if (errMsg) {
+                error += errMsg;
+                sqlite3_free(errMsg);
+            }
+            throw runtime_error(error);
+        }
+    }
+
+public:
+    UserService(const string&amp; dbPath = "users.db", CacheManager* cacheManager = nullptr) : cache(cacheManager) {
+        auto db_logger = spdlog::get("database");
+        
+        int rc = sqlite3_open(dbPath.c_str(), &amp;db);
+        if (rc) {
+            db_logger-&gt;error("Failed to open database at {}: {}", dbPath, sqlite3_errmsg(db));
+            throw runtime_error("Can't open database: " + string(sqlite3_errmsg(db)));
+        }
+        
+        db_logger-&gt;info("Database opened successfully: {}", dbPath);
+        initializeDatabase();
+    }
+
+    ~UserService() {
+        if (db) {
+            sqlite3_close(db);
+        }
+    }
+
+    void initializeDatabase() {
+        lock_guard&lt;mutex&gt; lock(db_mutex);
+        auto db_logger = spdlog::get("database");
+        
+        // Create users table
+        string createUsersTable = R"(
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL UNIQUE
+            );
+        )";
+        executeSQL(createUsersTable);
+        
+        // Create auth_users table for authentication
+        string createAuthTable = R"(
+            CREATE TABLE IF NOT EXISTS auth_users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                email TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        )";
+        executeSQL(createAuthTable);
+        
+        // Insert sample data if tables are empty
+        sqlite3_stmt* stmt;
+        string countQuery = "SELECT COUNT(*) FROM users";
+        sqlite3_prepare_v2(db, countQuery.c_str(), -1, &amp;stmt, NULL);
+        
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            int count = sqlite3_column_int(stmt, 0);
+            if (count == 0) {
+                executeSQL("INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com')");
+                executeSQL("INSERT INTO users (name, email) VALUES ('Jane Smith', 'jane@example.com')");
+                db_logger-&gt;info("Inserted sample users data");
+            }
+        }
+        sqlite3_finalize(stmt);
+        
+        db_logger-&gt;info("Database initialization completed successfully");
+    }
+
+    // Thread-safe CRUD operations with caching
+    vector&lt;User&gt; getAllUsers() {
+        lock_guard&lt;mutex&gt; lock(db_mutex);
+        vector&lt;User&gt; users;
+        sqlite3_stmt* stmt;
+        
+        string query = "SELECT id, name, email FROM users";
+        int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &amp;stmt, NULL);
+        
+        if (rc == SQLITE_OK) {
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                User user;
+                user.id = sqlite3_column_int(stmt, 0);
+                user.name = reinterpret_cast&lt;const char*&gt;(sqlite3_column_text(stmt, 1));
+                user.email = reinterpret_cast&lt;const char*&gt;(sqlite3_column_text(stmt, 2));
+                users.push_back(user);
+            }
+        }
+        sqlite3_finalize(stmt);
+        return users;
+    }
+
+    User* getUserById(int id) {
+        // Try cache first
+        if (cache &amp;&amp; cache-&gt;isConnected()) {
+            auto cached_user = cache-&gt;getCachedUser(id);
+            if (cached_user.has_value()) {
+                static User user = cached_user.value();
+                return &amp;user;
+            }
+        }
+        
+        // Cache miss - fetch from database
+        lock_guard&lt;mutex&gt; lock(db_mutex);
+        static User user;
+        sqlite3_stmt* stmt;
+        
+        string query = "SELECT id, name, email FROM users WHERE id = ?";
+        int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &amp;stmt, NULL);
+        
+        if (rc == SQLITE_OK) {
+            sqlite3_bind_int(stmt, 1, id);
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                user.id = sqlite3_column_int(stmt, 0);
+                user.name = reinterpret_cast&lt;const char*&gt;(sqlite3_column_text(stmt, 1));
+                user.email = reinterpret_cast&lt;const char*&gt;(sqlite3_column_text(stmt, 2));
+                sqlite3_finalize(stmt);
+                
+                // Cache the result
+                if (cache &amp;&amp; cache-&gt;isConnected()) {
+                    cache-&gt;cacheUser(id, user);
+                }
+                
+                return &amp;user;
+            }
+        }
+        sqlite3_finalize(stmt);
+        return nullptr;
+    }
+    
+    // Authentication methods
+    AuthUser* authenticateUser(const string&amp; username, const string&amp; password);
+    AuthUser registerUser(const string&amp; username, const string&amp; email, const string&amp; password);
+    User createUser(const string&amp; name, const string&amp; email);
+    bool updateUser(int id, const string&amp; name, const string&amp; email);
+    bool deleteUser(int id);
+};</div>
+            </div>
+
+            <h3>Step 4: HTTP Server Setup</h3>
+            <div class="step">
+                <h4>Initialize Server with CORS</h4>
+                <div class="code-block">int main() {
+    // Initialize logging first
+    setupLogging();
+    
+    auto logger = spdlog::get("api");
+    logger-&gt;info("Starting RESTful API Server");
+    
+    // Initialize cache manager
+    string redis_host = getenv("REDIS_HOST") ? getenv("REDIS_HOST") : "redis";
+    int redis_port = getenv("REDIS_PORT") ? atoi(getenv("REDIS_PORT")) : 6379;
+    
+    CacheManager cacheManager(redis_host, redis_port);
+    
+    httplib::Server server;
+    UserService userService("users.db", &amp;cacheManager);
+
+    // CORS middleware
+    server.set_pre_routing_handler([](const httplib::Request&amp; req, httplib::Response&amp; res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        return httplib::Server::HandlerResponse::Unhandled;
+    });
+
+    // Request logging middleware
+    server.set_post_routing_handler([](const httplib::Request&amp; req, httplib::Response&amp; res) {
+        logRequest(req, res);
+        return httplib::Server::HandlerResponse::Unhandled;
+    });
+
+    // Handle OPTIONS requests for CORS
+    server.Options(R"(/.*)", [](const httplib::Request&amp;, httplib::Response&amp; res) {
+        return;
+    });
+
+    // Health check endpoint
+    server.Get("/api/health", [&amp;cacheManager](const httplib::Request&amp;, httplib::Response&amp; res) {
+        json response = {
+            {"status", "healthy"},
+            {"message", "API is running"},
+            {"timestamp", time(nullptr)},
+            {"cache", {
+                {"redis_connected", cacheManager.isConnected()}
+            }}
+        };
+        res.set_content(response.dump(), "application/json");
+    });
+
+    // Start server with logging
+    logger-&gt;info("Starting server on http://0.0.0.0:8080");
+    logger-&gt;info("Available API endpoints:");
+    logger-&gt;info("  GET    /api/health");
+    logger-&gt;info("  POST   /api/auth/register");
+    logger-&gt;info("  POST   /api/auth/login");
+    logger-&gt;info("  GET    /api/users (Protected)");
+    logger-&gt;info("  POST   /api/users (Protected)");
+    logger-&gt;info("  PUT    /api/users/:id (Protected)");
+    logger-&gt;info("  DELETE /api/users/:id (Protected)");
+    logger-&gt;info("Default login: admin / admin123");
+
+    if (!server.listen("0.0.0.0", 8080)) {
+        logger-&gt;critical("Failed to start server on port 8080");
+        return 1;
+    }
+
+    return 0;
+}</div>
+            </div>
+
+            <h3>Step 5: Create Dockerfile</h3>
+            <div class="step">
+                <h4>Multi-stage Docker Build</h4>
+                <div class="code-block"># Use Ubuntu as base image
+FROM ubuntu:22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV CXX=g++
+
+# Install dependencies
+RUN apt-get update &amp;&amp; apt-get install -y \
+    g++ cmake git pkg-config libssl-dev zlib1g-dev \
+    libsqlite3-dev sqlite3 libhiredis-dev \
+    wget curl build-essential unzip \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Create directories
+RUN mkdir -p /usr/local/include/nlohmann /usr/local/include/jwt-cpp /usr/local/include/spdlog
+
+# Install header-only libraries
+RUN wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h \
+         -O /usr/local/include/httplib.h &amp;&amp; \
+    wget https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp \
+         -O /usr/local/include/nlohmann/json.hpp &amp;&amp; \
+    wget https://github.com/Thalhammer/jwt-cpp/releases/download/v0.6.0/jwt-cpp.zip \
+         -O jwt-cpp.zip &amp;&amp; \
+    unzip jwt-cpp.zip &amp;&amp; \
+    cp -r jwt-cpp-0.6.0/include/jwt-cpp/* /usr/local/include/jwt-cpp/ &amp;&amp; \
+    wget https://github.com/gabime/spdlog/archive/refs/tags/v1.12.0.zip \
+         -O spdlog.zip &amp;&amp; \
+    unzip spdlog.zip &amp;&amp; \
+    cp -r spdlog-1.12.0/include/spdlog/* /usr/local/include/spdlog/
+
+# Install redis-plus-plus
+RUN git clone https://github.com/sewenew/redis-plus-plus.git &amp;&amp; \
+    cd redis-plus-plus &amp;&amp; \
+    mkdir build &amp;&amp; cd build &amp;&amp; \
+    cmake -DREDIS_PLUS_PLUS_CXX_STANDARD=17 .. &amp;&amp; \
+    make &amp;&amp; make install
+
+# Set working directory
+WORKDIR /app
+
+# Create logs directory
+RUN mkdir -p /app/logs
+
+# Copy and compile
+COPY main.cpp .
+RUN g++ -std=c++17 -pthread -O2 -I/usr/local/include -o api_server main.cpp \
+    -lsqlite3 -lssl -lcrypto -lredis++ -lhiredis
+
+# Expose port and run
+EXPOSE 8080
+CMD ["./api_server"]</div>
+            </div>
+
+            <h3>Step 6: Docker Compose Configuration</h3>
+            <div class="step">
+                <h4>Multi-container Setup</h4>
+                <div class="code-block">services:
+  api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cpp-api-server
+    ports:
+      - "8080:8080"
+    environment:
+      - ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: cpp-api-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: cpp-api-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api-server
+    restart: unless-stopped
+
+volumes:
+  redis_data:</div>
+            </div>
+        </div>
+
+        <div class="card" id="api-endpoints">
+            <h2>🛣 5. API Endpoints</h2>
+
+            <h3>📋 Endpoint Overview</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                        <th>Request Body</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/health</td>
+                        <td>Health check with Redis status</td>
+                        <td>None</td>
+                        <td>Status info with cache status</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/api/auth/register</td>
+                        <td>Register new user account</td>
+                        <td>username, email, password</td>
+                        <td>User info + JWT token</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/api/auth/login</td>
+                        <td>User authentication</td>
+                        <td>username, password</td>
+                        <td>User info + JWT token</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/users</td>
+                        <td>Get all users (Protected)</td>
+                        <td>Authorization header</td>
+                        <td>User array with count</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/users/:id</td>
+                        <td>Get user by ID with caching (Protected)</td>
+                        <td>Authorization header</td>
+                        <td>User object</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/api/users</td>
+                        <td>Create new user with caching (Protected)</td>
+                        <td>name, email + Authorization header</td>
+                        <td>Created user</td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>/api/users/:id</td>
+                        <td>Update user, invalidate cache (Protected)</td>
+                        <td>name, email + Authorization header</td>
+                        <td>Updated user</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/api/users/:id</td>
+                        <td>Delete user, invalidate cache (Protected)</td>
+                        <td>Authorization header</td>
+                        <td>Confirmation message</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/cache/stats</td>
+                        <td>Get Redis cache statistics (Protected)</td>
+                        <td>Authorization header</td>
+                        <td>Cache statistics</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📝 Request/Response Examples</h3>
+
+            <div class="step">
+                <h4>Register New User (POST /api/auth/register)</h4>
+                <p><strong>Request:</strong></p>
+                <div class="code-block">curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "newuser",
+    "email": "user@example.com",
+    "password": "password123"
+  }'</div>
+
+                <p><strong>Response:</strong></p>
+                <div class="code-block">{
+  "message": "User registered successfully",
+  "user": {
+    "id": 3,
+    "username": "newuser",
+    "email": "user@example.com"
+  },
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</div>
+            </div>
+
+            <div class="step">
+                <h4>Login User (POST /api/auth/login)</h4>
+                <p><strong>Request:</strong></p>
+                <div class="code-block">curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "admin123"
+  }'</div>
+
+                <p><strong>Response:</strong></p>
+                <div class="code-block">{
+  "message": "Login successful",
+  "user": {
+    "id": 1,
+    "username": "admin",
+    "email": "admin@example.com"
+  },
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</div>
+            </div>
+
+            <div class="step">
+                <h4>Get All Users - Protected (GET /api/users)</h4>
+                <p><strong>Request:</strong></p>
+                <div class="code-block">TOKEN="your-jwt-token-here"
+curl -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/users</div>
+
+                <p><strong>Response:</strong></p>
+                <div class="code-block">{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com"
+    }
+  ],
+  "count": 2
+}</div>
+            </div>
+
+            <div class="step">
+                <h4>Create User - Protected (POST /api/users)</h4>
+                <p><strong>Request:</strong></p>
+                <div class="code-block">curl -X POST http://localhost:8080/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "name": "Alice Johnson",
+    "email": "alice@example.com"
+  }'</div>
+
+                <p><strong>Response:</strong></p>
+                <div class="code-block">{
+  "id": 3,
+  "name": "Alice Johnson",
+  "email": "alice@example.com"
+}</div>
+            </div>
+        </div>
+
+        <div class="card" id="docker-setup">
+            <h2>🐳 6. Docker Configuration</h2>
+
+            <h3>🚀 Quick Start with Docker</h3>
+            <div class="step">
+                <h4>Build and Run</h4>
+                <div class="command">docker-compose up --build</div>
+                <p>This command will:</p>
+                <ul>
+                    <li>Build the C++ application</li>
+                    <li>Start the API server on port 8080</li>
+                    <li>Start Nginx proxy on port 80</li>
+                    <li>Set up health checks</li>
+                </ul>
+            </div>
+
+            <h3>🔧 Nginx Configuration</h3>
+            <div class="step">
+                <h4>Reverse Proxy Setup (nginx.conf)</h4>
+                <div class="code-block">server {
+    listen 80;
+    server_name localhost;
+
+    # API routes
+    location /api/ {
+        proxy_pass http://api-server:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        
+        # CORS headers
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+        add_header Access-Control-Allow-Headers "Content-Type, Authorization";
+        
+        # Handle preflight requests
+        if ($request_method = 'OPTIONS') {
+            return 204;
+        }
+    }
+
+    # Health check
+    location /health {
+        proxy_pass http://api-server:8080/api/health;
+    }
+
+    # Default route
+    location / {
+        return 200 '{"message": "C++ REST API Server"}';
+        add_header Content-Type application/json;
+    }
+}</div>
+            </div>
+
+            <div class="info">
+                <strong>💡 Why Nginx?</strong> Nginx provides load balancing, SSL termination, static file serving, and better performance for production deployments.
+            </div>
+        </div>
+
+        <div class="card" id="testing">
+            <h2>🧪 7. Testing Your API</h2>
+
+            <h3>🔍 Health Check</h3>
+            <div class="step">
+                <div class="command">curl http://localhost:8080/api/health</div>
+                <p>Expected response:</p>
+                <div class="code-block">{
+  "status": "healthy",
+  "message": "API is running",
+  "timestamp": 1704067200
+}</div>
+            </div>
+
+            <h3>👥 User Management Testing</h3>
+            <div class="step">
+                <h4>Complete Test Script</h4>
+                <div class="code-block">#!/bin/bash
+
+echo "=== Testing C++ REST API with Authentication ==="
+
+# Health check
+echo "1. Health Check"
+curl -s http://localhost:8080/api/health | jq
+
+# Register new user
+echo -e "\n2. Register New User"
+curl -s -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "testuser", "email": "test@example.com", "password": "password123"}' | jq
+
+# Login to get token
+echo -e "\n3. Login User"
+TOKEN=$(curl -s -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "admin123"}' | jq -r '.token')
+
+echo "Token: $TOKEN"
+
+# Get all users (Protected)
+echo -e "\n4. Get All Users (Protected)"
+curl -s -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/users | jq
+
+# Create new user (Protected)
+echo -e "\n5. Create New User (Protected)"
+curl -s -X POST http://localhost:8080/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"name": "Test User", "email": "newtest@example.com"}' | jq
+
+# Get user by ID (Protected) - should be served from cache on second request
+echo -e "\n6. Get User by ID (Protected)"
+curl -s -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/users/1 | jq
+
+# Update user (Protected) - invalidates cache
+echo -e "\n7. Update User (Protected)"
+curl -s -X PUT http://localhost:8080/api/users/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"name": "Updated Name", "email": "updated@example.com"}' | jq
+
+# Check cache statistics (Protected)
+echo -e "\n8. Cache Statistics (Protected)"
+curl -s -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/cache/stats | jq
+
+# Delete user (Protected) - invalidates cache
+echo -e "\n9. Delete User (Protected)"
+curl -s -X DELETE http://localhost:8080/api/users/2 \
+  -H "Authorization: Bearer $TOKEN" | jq
+
+echo -e "\n=== Testing Complete ==="</div>
+            </div>
+
+            <h3>📊 Load Testing (Optional)</h3>
+            <div class="step">
+                <h4>Using Apache Bench</h4>
+                <div class="command">sudo apt-get install apache2-utils</div>
+                <div class="command">ab -n 1000 -c 10 http://localhost:8080/api/health</div>
+                <p>This runs 1000 requests with 10 concurrent connections</p>
+            </div>
+        </div>
+
+        <div class="card" id="deployment">
+            <h2>🚀 8. Production Deployment</h2>
+
+            <h3>☁️ Cloud Deployment Options</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🐳 Docker Hub + VPS</h4>
+                    <ol>
+                        <li>Build and push to Docker Hub</li>
+                        <li>Deploy to VPS with docker-compose</li>
+                        <li>Set up SSL with Let's Encrypt</li>
+                        <li>Configure monitoring</li>
+                    </ol>
+                </div>
+                <div class="feature-card">
+                    <h4>☁️ AWS ECS</h4>
+                    <ol>
+                        <li>Create ECS task definition</li>
+                        <li>Set up Application Load Balancer</li>
+                        <li>Configure auto-scaling</li>
+                        <li>Add CloudWatch monitoring</li>
+                    </ol>
+                </div>
+                <div class="feature-card">
+                    <h4>🔵 DigitalOcean Apps</h4>
+                    <ol>
+                        <li>Connect GitHub repository</li>
+                        <li>Configure build settings</li>
+                        <li>Set environment variables</li>
+                        <li>Deploy with auto-scaling</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>🔒 Production Checklist</h3>
+            <div class="step">
+                <ul>
+                    <li>✅ Enable HTTPS/TLS encryption</li>
+                    <li>✅ Set up proper logging</li>
+                    <li>✅ Configure monitoring and alerts</li>
+                    <li>✅ Implement rate limiting</li>
+                    <li>✅ Add authentication/authorization</li>
+                    <li>✅ Set up database persistence</li>
+                    <li>✅ Configure backup strategies</li>
+                    <li>✅ Set up CI/CD pipeline</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>✅ Production Ready:</strong> This implementation includes JWT authentication, SQLite persistence, Redis caching, and comprehensive logging - suitable for production deployment with proper SSL/TLS setup.
+            </div>
+        </div>
+
+        <div class="card" id="authentication">
+            <h2>🔐 9. Authentication & JWT</h2>
+
+            <h3>🎫 JWT Token Authentication</h3>
+            <div class="step">
+                <h4>Authentication Implementation</h4>
+                <p>The server includes comprehensive JWT authentication with token blacklisting via Redis:</p>
+                <ul>
+                    <li><strong>Token Generation:</strong> HS256 algorithm with 24-hour expiration</li>
+                    <li><strong>Token Verification:</strong> Automatic validation with blacklist checking</li>
+                    <li><strong>Token Blacklisting:</strong> Redis-based revocation system for logout</li>
+                    <li><strong>Password Security:</strong> SHA-256 hashing with OpenSSL</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>Authentication Endpoints</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>Method</th>
+                            <th>Purpose</th>
+                            <th>Request Body</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/api/auth/register</td>
+                            <td>POST</td>
+                            <td>Create new user account</td>
+                            <td>username, email, password</td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/login</td>
+                            <td>POST</td>
+                            <td>User authentication</td>
+                            <td>username, password</td>
+                        </tr>
+                        <tr>
+                            <td>/api/auth/logout</td>
+                            <td>POST</td>
+                            <td>Token blacklisting</td>
+                            <td>Authorization header required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>🔒 Using JWT Tokens</h3>
+            <div class="step">
+                <h4>Complete Authentication Flow</h4>
+                <div class="code-block"># 1. Register new user
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "newuser",
+    "email": "user@example.com",
+    "password": "password123"
+  }'
+
+# Response: {"message": "User registered successfully", "user_id": 3}
+
+# 2. Login to get JWT token
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "admin123"
+  }'
+
+# Response: {"token": "eyJ0eXAiOiJKV1QiLCJhbGc...", "user_id": 1, "expires_in": 86400}
+
+# 3. Use token for protected endpoints
+TOKEN="your-jwt-token-here"
+curl -H "Authorization: Bearer $TOKEN" http://localhost:8080/api/users
+
+# 4. Logout (blacklist token)
+curl -X POST http://localhost:8080/api/auth/logout \
+  -H "Authorization: Bearer $TOKEN"</div>
+            </div>
+
+            <h3>🛡️ Security Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🔑 Token Security</h4>
+                    <ul>
+                        <li>HS256 signing algorithm</li>
+                        <li>24-hour token expiration</li>
+                        <li>Unique JTI for blacklisting</li>
+                        <li>Redis-based revocation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Password Protection</h4>
+                    <ul>
+                        <li>SHA-256 password hashing</li>
+                        <li>No plaintext storage</li>
+                        <li>Secure comparison</li>
+                        <li>OpenSSL integration</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔐 Access Control</h4>
+                    <ul>
+                        <li>All user endpoints protected</li>
+                        <li>Automatic token validation</li>
+                        <li>Proper error responses</li>
+                        <li>Thread-safe operations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="advanced">
+            <h2>🔧 10. Advanced Features</h2>
+
+            <h3>🗄️ Database Integration</h3>
+            <div class="step">
+                <h4>Adding SQLite Support</h4>
+                <div class="code-block">// Install: apt-get install libsqlite3-dev
+#include &lt;sqlite3.h&gt;
+
+class DatabaseService {
+private:
+    sqlite3* db;
+
+public:
+    DatabaseService() {
+        int rc = sqlite3_open("users.db", &amp;db);
+        if (rc) {
+            cerr &lt;&lt; "Can't open database: " &lt;&lt; sqlite3_errmsg(db) &lt;&lt; endl;
+            exit(1);
+        }
+        
+        // Create users table
+        const char* sql = "CREATE TABLE IF NOT EXISTS users ("
+                         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                         "name TEXT NOT NULL,"
+                         "email TEXT NOT NULL UNIQUE);";
+        
+        char* errMsg = 0;
+        rc = sqlite3_exec(db, sql, 0, 0, &amp;errMsg);
+        if (rc != SQLITE_OK) {
+            cerr &lt;&lt; "SQL error: " &lt;&lt; errMsg &lt;&lt; endl;
+            sqlite3_free(errMsg);
+            exit(1);
+        }
+    }
+    
+    ~DatabaseService() {
+        sqlite3_close(db);
+    }
+    
+    // Implement CRUD operations with prepared statements
+};</div>
+            </div>
+
+            <h3>🔐 Authentication &amp; Authorization</h3>
+            <div class="step">
+                <h4>JWT Token Implementation</h4>
+                <div class="code-block">// Add jwt-cpp library
+#include &lt;jwt-cpp/jwt.h&gt;
+
+class AuthService {
+private:
+    string secret_key = "your-secret-key";
+
+public:
+    string generateToken(int user_id) {
+        return jwt::create()
+            .set_issuer("cpp-api-server")
+            .set_type("JWS")
+            .set_payload_claim("user_id", jwt::claim(user_id))
+            .set_issued_at(chrono::system_clock::now())
+            .set_expires_at(chrono::system_clock::now() + chrono::hours{24})
+            .sign(jwt::algorithm::hs256{secret_key});
+    }
+    
+    bool verifyToken(const string&amp; token) {
+        try {
+            auto decoded = jwt::decode(token);
+            auto verifier = jwt::verify()
+                .allow_algorithm(jwt::algorithm::hs256{secret_key})
+                .with_issuer("cpp-api-server");
+            verifier.verify(decoded);
+            return true;
+        } catch (const exception&amp; e) {
+            return false;
+        }
+    }
+};</div>
+            </div>
+
+            <h3>📊 Logging &amp; Monitoring</h3>
+            <div class="step">
+                <h4>Structured Logging with spdlog</h4>
+                <div class="code-block">// Install: apt-get install libspdlog-dev
+#include &lt;spdlog/spdlog.h&gt;
+#include &lt;spdlog/sinks/json_file_sink.h&gt;
+
+// Initialize logger
+void initLogger() {
+    auto logger = spdlog::basic_logger_mt("api_logger", "logs/api.log");
+    spdlog::set_default_logger(logger);
+    spdlog::set_level(spdlog::level::info);
+}
+
+// Usage in endpoints
+server.Get("/api/users", [&amp;userService](const httplib::Request&amp; req, httplib::Response&amp; res) {
+    spdlog::info("GET /api/users - Client IP: {}", req.get_header_value("X-Real-IP"));
+    
+    auto users = userService.getAllUsers();
+    // ... rest of the handler
+    
+    spdlog::info("GET /api/users - Returned {} users", users.size());
+});</div>
+            </div>
+
+            <h3>⚡ Performance Optimization</h3>
+            <div class="step">
+                <h4>Connection Pooling &amp; Caching</h4>
+                <div class="code-block">// Redis integration using redis-plus-plus (matches actual implementation)
+#include &lt;sw/redis++/redis++.h&gt;
+
+class CacheManager {
+private:
+    sw::redis::Redis* redis;
+    mutex cache_mutex;
+    const int USER_TTL = 1800;   // 30 minutes for user data
+
+public:
+    CacheManager(const string&amp; redis_host = "redis", int redis_port = 6379) {
+        try {
+            sw::redis::ConnectionOptions connection_options;
+            connection_options.host = redis_host;
+            connection_options.port = redis_port;
+            connection_options.connect_timeout = chrono::milliseconds(100);
+            
+            redis = new sw::redis::Redis(connection_options);
+            redis-&gt;ping();
+            
+            spdlog::info("Redis connection established successfully to {}:{}", redis_host, redis_port);
+        } catch (const exception&amp; e) {
+            spdlog::error("Failed to connect to Redis: {}", e.what());
+            redis = nullptr;
+        }
+    }
+    
+    ~CacheManager() {
+        if (redis) {
+            delete redis;
+        }
+    }
+    
+    bool cacheUser(int user_id, const User&amp; user) {
+        if (!redis) return false;
+        
+        lock_guard&lt;mutex&gt; lock(cache_mutex);
+        
+        try {
+            json user_json = {
+                {"id", user.id},
+                {"name", user.name},
+                {"email", user.email}
+            };
+            
+            string key = "user:" + to_string(user_id);
+            redis-&gt;setex(key, USER_TTL, user_json.dump());
+            return true;
+        } catch (const exception&amp; e) {
+            spdlog::warn("Failed to cache user {}: {}", user_id, e.what());
+            return false;
+        }
+    }
+    
+    optional&lt;User&gt; getCachedUser(int user_id) {
+        if (!redis) return nullopt;
+        
+        lock_guard&lt;mutex&gt; lock(cache_mutex);
+        
+        try {
+            string key = "user:" + to_string(user_id);
+            auto cached_data = redis-&gt;get(key);
+            
+            if (cached_data) {
+                json user_json = json::parse(*cached_data);
+                User user;
+                user.id = user_json["id"];
+                user.name = user_json["name"];
+                user.email = user_json["email"];
+                return user;
+            }
+        } catch (const exception&amp; e) {
+            spdlog::warn("Failed to get cached user {}: {}", user_id, e.what());
+        }
+        
+        return nullopt;
+    }
+};</div>
+            </div>
+        </div>
+
+        <div class="card" id="troubleshooting">
+            <h2>🔍 11. Troubleshooting</h2>
+
+            <h3>❌ Common Issues</h3>
+            
+            <div class="step">
+                <h4>Issue: "httplib.h: No such file or directory"</h4>
+                <p><strong>Solution:</strong></p>
+                <div class="command">wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h</div>
+                <div class="command">sudo mv httplib.h /usr/local/include/</div>
+            </div>
+
+            <div class="step">
+                <h4>Issue: "Address already in use"</h4>
+                <p><strong>Solutions:</strong></p>
+                <div class="command">sudo lsof -i :8080</div>
+                <div class="command">sudo kill -9 &lt;PID&gt;</div>
+                <p>Or change the port in main.cpp:</p>
+                <div class="code-block">server.listen("0.0.0.0", 8081);  // Use different port</div>
+            </div>
+
+            <div class="step">
+                <h4>Issue: Docker build fails</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Check Docker daemon is running</li>
+                    <li>Ensure internet connectivity for downloads</li>
+                    <li>Clear Docker cache: <code>docker system prune -a</code></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>Issue: CORS errors in browser</h4>
+                <p><strong>Solution:</strong> Ensure CORS headers are properly set:</p>
+                <div class="code-block">res.set_header("Access-Control-Allow-Origin", "*");
+res.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");</div>
+            </div>
+
+            <h3>🐛 Debug Mode</h3>
+            <div class="step">
+                <h4>Compile with Debug Symbols</h4>
+                <div class="command">g++ -std=c++17 -pthread -g -DDEBUG -I/usr/local/include -o api_server_debug main.cpp</div>
+                <div class="command">gdb ./api_server_debug</div>
+            </div>
+
+            <h3>📊 Monitoring Commands</h3>
+            <div class="step">
+                <h4>Useful Commands</h4>
+                <div class="command">docker-compose logs -f</div>
+                <div class="command">docker stats</div>
+                <div class="command">curl -I http://localhost:8080/api/health</div>
+                <div class="command">netstat -tlnp | grep 8080</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🎉 Conclusion</h2>
+            <div class="success">
+                <p><strong>Congratulations!</strong> You've successfully built a production-ready RESTful API server in C++. Your application now includes:</p>
+                <ul>
+                    <li>✅ Complete CRUD operations with caching</li>
+                    <li>✅ JWT authentication with token blacklisting</li>
+                    <li>✅ SQLite database with automatic initialization</li>
+                    <li>✅ Redis caching with TTL management</li>
+                    <li>✅ Structured logging with rotation</li>
+                    <li>✅ Docker containerization with multi-service setup</li>
+                    <li>✅ Nginx reverse proxy</li>
+                    <li>✅ Health monitoring with Redis status</li>
+                    <li>✅ CORS support</li>
+                    <li>✅ Comprehensive error handling</li>
+                </ul>
+            </div>
+
+            <h3>🚀 Next Steps</h3>
+            <ul>
+                <li>Add role-based access control (RBAC)</li>
+                <li>Implement API rate limiting</li>
+                <li>Add comprehensive API documentation (OpenAPI/Swagger)</li>
+                <li>Set up monitoring &amp; metrics (Prometheus/Grafana)</li>
+                <li>Create automated tests (unit, integration, load)</li>
+                <li>Implement database migrations</li>
+                <li>Add email verification for registration</li>
+                <li>Deploy to production environment with SSL/TLS</li>
+            </ul>
+
+            <div class="info">
+                <strong>💡 Pro Tips:</strong>
+                <ul>
+                    <li>Always validate input data thoroughly</li>
+                    <li>Implement proper error handling for all edge cases</li>
+                    <li>Use connection pooling for database operations</li>
+                    <li>Consider using a framework like Crow or Drogon for larger applications</li>
+                    <li>Implement rate limiting to prevent abuse</li>
+                    <li>Use HTTPS in production environments</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: #666;">
+            <p>Built with ❤️ using modern C++17, Docker, and best practices</p>
+            <p>Happy coding! 🚀</p>
+        </footer>
+    </div>
+</body>
+</html>

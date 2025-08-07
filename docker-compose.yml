@@ -1,5 +1,20 @@
 
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: cpp-api-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   api-server:
     build:
       context: .
@@ -9,6 +24,12 @@ services:
       - "8080:8080"
     environment:
       - ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
@@ -28,3 +49,6 @@ services:
     depends_on:
       - api-server
     restart: unless-stopped
+
+volumes:
+  redis_data:

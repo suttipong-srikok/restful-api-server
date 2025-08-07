@@ -77,10 +77,57 @@ Thumbs.db
 
 # Logs
 *.log
+logs/
+*.log.*
+
+# Database files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
 
 # Docker volumes and data
 docker-data/
+redis_data/
+
+# Application runtime files
+api_server_debug
+core
+*.core
+
+# SSL/TLS certificates (if generated locally)
+*.crt
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Package manager files
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# JWT secrets and config files (if stored locally)
+secrets/
+config/
+.secrets
+
+# Test artifacts
+test_results/
+coverage/
+*.gcda
+*.gcno
+*.lcov
 
 # Temporary files
 tmp/
 temp/
+*.tmp
